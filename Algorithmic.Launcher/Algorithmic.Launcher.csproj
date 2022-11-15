@@ -1,21 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <AssemblyName>Launcher</AssemblyName>
-    <RootNamespace>ShareInvest</RootNamespace>
-    <ApplicationIcon>money_accumulate.ico</ApplicationIcon>
-    <Authors>cyberprophet</Authors>
-    <Company>ShareInvest</Company>
-    <Product>Algorithmic Trading</Product>
-    <Copyright>Copyright ⓒ 2022, ShareInvest Corp.</Copyright>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<AssemblyName>Launcher</AssemblyName>
+		<RootNamespace>ShareInvest</RootNamespace>
+		<ApplicationIcon>money_accumulate.ico</ApplicationIcon>
+		<Authors>cyberprophet</Authors>
+		<Company>ShareInvest</Company>
+		<Product>Algorithmic Trading</Product>
+		<Copyright>Copyright ⓒ 2022, ShareInvest Corp.</Copyright>
+	    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="money_accumulate.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="money_accumulate.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Pages\" />
+		<Folder Include="ViewModels\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	  </ItemGroup>
 
 </Project>
