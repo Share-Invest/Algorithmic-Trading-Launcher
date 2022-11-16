@@ -61,20 +61,11 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
-        ///   종료과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   시스템 종료과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string EXIT {
             get {
                 return ResourceManager.GetString("EXIT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   연결과(와) 유사한 지역화된 문자열을 찾습니다.
-        /// </summary>
-        internal static string LINK {
-            get {
-                return ResourceManager.GetString("LINK", resourceCulture);
             }
         }
         
@@ -95,6 +86,15 @@ namespace ShareInvest.Properties {
             get {
                 object obj = ResourceManager.GetObject("RECYCLING", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   시작프로그램 등록과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string REGISTER {
+            get {
+                return ResourceManager.GetString("REGISTER", resourceCulture);
             }
         }
         
