@@ -9,7 +9,7 @@
 		<RootNamespace>ShareInvest</RootNamespace>
 		<ApplicationIcon>money_accumulate.ico</ApplicationIcon>
 		<Authors>cyberprophet</Authors>
-		<Company>ShareInvest</Company>
+		<Company>ShareInvest Corp.</Company>
 		<Product>Algorithmic Trading</Product>
 		<Copyright>Copyright ⓒ 2022, ShareInvest Corp.</Copyright>
 		<UseWindowsForms>True</UseWindowsForms>

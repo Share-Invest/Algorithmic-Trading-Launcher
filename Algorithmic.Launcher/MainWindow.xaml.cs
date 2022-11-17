@@ -102,7 +102,10 @@ namespace ShareInvest
 
             _ = WindowAttribute.SetWindowRgn(menu.Handle, hRgn, true);
 #if DEBUG
+            foreach (var info in Install.GetVersionInfo(Properties.Resources.SERVER))
+            {
 
+            }
 #endif
             timer.Start();
         }

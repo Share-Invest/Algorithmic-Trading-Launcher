@@ -70,6 +70,15 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   publish과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string PUBLISH {
+            get {
+                return ResourceManager.GetString("PUBLISH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
         internal static System.Drawing.Icon RECYCLE {
@@ -95,6 +104,24 @@ namespace ShareInvest.Properties {
         internal static string REGISTER {
             get {
                 return ResourceManager.GetString("REGISTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Server.exe과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string SERVER {
+            get {
+                return ResourceManager.GetString("SERVER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   C:\Users\T2\source\repos과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string SOURCES {
+            get {
+                return ResourceManager.GetString("SOURCES", resourceCulture);
             }
         }
         
