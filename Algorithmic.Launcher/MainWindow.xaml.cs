@@ -1,7 +1,9 @@
-﻿using ShareInvest.Services;
+﻿using ShareInvest.Infrastructure.Kiwoom;
+using ShareInvest.Services;
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -25,6 +27,11 @@ namespace ShareInvest
                 },
                 new System.Windows.Forms.ToolStripMenuItem
                 {
+                    Name = nameof(Properties.Resources.INSTALL),
+                    Text = Properties.Resources.INSTALL
+                },
+                new System.Windows.Forms.ToolStripMenuItem
+                {
                     Name = nameof(Properties.Resources.EXIT),
                     Text = Properties.Resources.EXIT
                 }
@@ -36,6 +43,18 @@ namespace ShareInvest
                     case nameof(Properties.Resources.REGISTER):
 
                         return;
+
+                    case nameof(Properties.Resources.INSTALL):
+
+                        if (kiwoom.IsNotInstalled)
+                            Process.Start(new ProcessStartInfo(Properties.Resources.KIWOOM)
+                            {
+                                UseShellExecute = kiwoom.IsNotInstalled
+                            });
+                        else
+                            return;
+
+                        break;
                 }
                 Visibility = Visibility.Hidden;
 
@@ -59,8 +78,6 @@ namespace ShareInvest
                 if (IsVisible == false)
                 {
                     Show();
-
-                    WindowState = WindowState.Normal;
                 }
             };
             timer = new DispatcherTimer
@@ -74,6 +91,10 @@ namespace ShareInvest
                 switch (now.Minute % 3)
                 {
                     case 0 when now.Second == 0:
+
+                        var name = Properties.Resources.APP.Split('.')[0];
+
+                        Startup.StartProcess(name);
 
                         break;
 
@@ -130,6 +151,7 @@ namespace ShareInvest
                 Hide();
             }
         }
+        readonly OpenAPI kiwoom = new();
         readonly DispatcherTimer timer;
         readonly System.Windows.Forms.ContextMenuStrip menu;
         readonly System.Windows.Forms.NotifyIcon notifyIcon;
