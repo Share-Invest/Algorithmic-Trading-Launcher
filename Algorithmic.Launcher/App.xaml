@@ -33,7 +33,6 @@
 
             <Setter Property="Background"
                     Value="Black">
-
             </Setter>
         </Style>
 

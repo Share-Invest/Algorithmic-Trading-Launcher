@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ADMIN" xml:space="preserve">
+    <value>runas</value>
+  </data>
+  <data name="API" xml:space="preserve">
+    <value>API.exe</value>
+  </data>
+  <data name="APP" xml:space="preserve">
+    <value>Securities.exe</value>
+  </data>
   <data name="EXIT" xml:space="preserve">
     <value>시스템 종료</value>
+  </data>
+  <data name="INSTALL" xml:space="preserve">
+    <value>키움 Open API+</value>
+  </data>
+  <data name="KIWOOM" xml:space="preserve">
+    <value>https://www1.kiwoom.com/h/customer/download/VOpenApiInfoView?dummyVal=0</value>
   </data>
   <data name="PUBLISH" xml:space="preserve">
     <value>publish</value>
@@ -144,5 +159,8 @@
   </data>
   <data name="WARNING" xml:space="preserve">
     <value>It can be fatal to data when manually terminated.||Do you really want to end it?</value>
+  </data>
+  <data name="WD86" xml:space="preserve">
+    <value>C:\Program Files (x86)\ShareInvest Algorithmic Trading</value>
   </data>
 </root>

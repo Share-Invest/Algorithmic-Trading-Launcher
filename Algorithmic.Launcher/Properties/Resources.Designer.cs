@@ -61,11 +61,56 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   runas과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ADMIN {
+            get {
+                return ResourceManager.GetString("ADMIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   API.exe과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string API {
+            get {
+                return ResourceManager.GetString("API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Securities.exe과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string APP {
+            get {
+                return ResourceManager.GetString("APP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   시스템 종료과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string EXIT {
             get {
                 return ResourceManager.GetString("EXIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   키움 Open API+과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string INSTALL {
+            get {
+                return ResourceManager.GetString("INSTALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   https://www1.kiwoom.com/h/customer/download/VOpenApiInfoView?dummyVal=0과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string KIWOOM {
+            get {
+                return ResourceManager.GetString("KIWOOM", resourceCulture);
             }
         }
         
@@ -140,6 +185,15 @@ namespace ShareInvest.Properties {
         internal static string WARNING {
             get {
                 return ResourceManager.GetString("WARNING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   C:\Program Files (x86)\ShareInvest Algorithmic Trading과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string WD86 {
+            get {
+                return ResourceManager.GetString("WD86", resourceCulture);
             }
         }
     }

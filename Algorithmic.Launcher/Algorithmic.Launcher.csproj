@@ -10,7 +10,7 @@
 		<ApplicationIcon>money_accumulate.ico</ApplicationIcon>
 		<Authors>cyberprophet</Authors>
 		<Company>ShareInvest Corp.</Company>
-		<Product>Algorithmic Trading</Product>
+		<Product>Algorithmic-Trading</Product>
 		<Copyright>Copyright ⓒ 2022, ShareInvest Corp.</Copyright>
 		<UseWindowsForms>True</UseWindowsForms>
 		<Version>0.0.0.0</Version>
@@ -23,6 +23,10 @@
 	<ItemGroup>
 		<Folder Include="Pages\" />
 		<Folder Include="ViewModels\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Library.October.2022\Algorithmic.Library\Algorithmic.Library.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
