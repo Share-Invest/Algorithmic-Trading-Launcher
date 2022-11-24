@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Algorithmic-Trading-Library\Algorithmic.Library\Algorithmic.Library.csproj" />
+		<ProjectReference Include="..\..\Algorithmic-Trading-Library\Algorithmic.Library\Algorithmic.Library.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
