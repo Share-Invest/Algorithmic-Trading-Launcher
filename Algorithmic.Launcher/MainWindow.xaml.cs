@@ -142,12 +142,14 @@ namespace ShareInvest
                                                   sizeof(uint));
 
             _ = WindowAttribute.SetWindowRgn(menu.Handle, hRgn, true);
-#if DEBUG
-            foreach (var info in Install.GetVersionInfo(Properties.Resources.SERVER))
-            {
 
+            for (int i = 0; i < programs.Length; i++)
+            {
+                foreach (var info in Install.GetVersionInfo(programs[i]))
+                {
+
+                }
             }
-#endif
             timer.Start();
         }
         void OnClosing(object sender, CancelEventArgs e)
@@ -171,6 +173,10 @@ namespace ShareInvest
                 Hide();
             }
         }
+        readonly string[] programs = new[]
+        {
+            Properties.Resources.SERVER
+        };
         readonly Register register = new(Properties.Resources.RUN);
         readonly OpenAPI kiwoom = new();
         readonly DispatcherTimer timer;

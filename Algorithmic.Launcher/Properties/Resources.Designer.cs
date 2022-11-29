@@ -61,6 +61,15 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   64 --sc과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string _64SELFCONTAINED {
+            get {
+                return ResourceManager.GetString("64SELFCONTAINED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   runas과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string ADMIN {
@@ -84,6 +93,24 @@ namespace ShareInvest.Properties {
         internal static string APP {
             get {
                 return ResourceManager.GetString("APP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   dotnet publish -c release -r win-x과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string BUILD {
+            get {
+                return ResourceManager.GetString("BUILD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   *.csproj과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string CSPROJ {
+            get {
+                return ResourceManager.GetString("CSPROJ", resourceCulture);
             }
         }
         
@@ -120,6 +147,15 @@ namespace ShareInvest.Properties {
         internal static string KIWOOM {
             get {
                 return ResourceManager.GetString("KIWOOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   pwsh과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string POWERSHELL {
+            get {
+                return ResourceManager.GetString("POWERSHELL", resourceCulture);
             }
         }
         
