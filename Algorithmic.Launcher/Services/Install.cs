@@ -27,7 +27,7 @@ static class Install
                     dirName.EndsWith(Properties.Resources.PUBLISH,
                                      StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.WriteLine(info.FileName);
+
 
                     break;
                 }
@@ -37,7 +37,7 @@ static class Install
                                                       "*",
                                                       SearchOption.AllDirectories))
         {
-            Debug.WriteLine(file);
+            
 
             yield return FileVersionInfo.GetVersionInfo(file);
         }

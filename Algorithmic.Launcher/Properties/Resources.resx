@@ -126,6 +126,9 @@
   <data name="APP" xml:space="preserve">
     <value>Securities.exe</value>
   </data>
+  <data name="EXE" xml:space="preserve">
+    <value>.exe</value>
+  </data>
   <data name="EXIT" xml:space="preserve">
     <value>시스템 종료</value>
   </data>
@@ -148,6 +151,9 @@
   <data name="REGISTER" xml:space="preserve">
     <value>시작프로그램 등록</value>
   </data>
+  <data name="RUN" xml:space="preserve">
+    <value>SOFTWARE\Microsoft\Windows\CurrentVersion\Run</value>
+  </data>
   <data name="SERVER" xml:space="preserve">
     <value>Server.exe</value>
   </data>
@@ -156,6 +162,9 @@
   </data>
   <data name="TITLE" xml:space="preserve">
     <value>Algorithmic-Trading</value>
+  </data>
+  <data name="UNREGISTER" xml:space="preserve">
+    <value>시작프로그램 해제</value>
   </data>
   <data name="WARNING" xml:space="preserve">
     <value>It can be fatal to data when manually terminated.||Do you really want to end it?</value>
