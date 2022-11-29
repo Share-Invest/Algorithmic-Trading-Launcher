@@ -61,6 +61,15 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   64 --sc과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string _64SELFCONTAINED {
+            get {
+                return ResourceManager.GetString("64SELFCONTAINED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   runas과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string ADMIN {
@@ -88,6 +97,33 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   dotnet publish -c release -r win-x과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string BUILD {
+            get {
+                return ResourceManager.GetString("BUILD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   *.csproj과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string CSPROJ {
+            get {
+                return ResourceManager.GetString("CSPROJ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .exe과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string EXE {
+            get {
+                return ResourceManager.GetString("EXE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   시스템 종료과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string EXIT {
@@ -111,6 +147,15 @@ namespace ShareInvest.Properties {
         internal static string KIWOOM {
             get {
                 return ResourceManager.GetString("KIWOOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   pwsh과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string POWERSHELL {
+            get {
+                return ResourceManager.GetString("POWERSHELL", resourceCulture);
             }
         }
         
@@ -153,6 +198,15 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   SOFTWARE\Microsoft\Windows\CurrentVersion\Run과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string RUN {
+            get {
+                return ResourceManager.GetString("RUN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Server.exe과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string SERVER {
@@ -176,6 +230,15 @@ namespace ShareInvest.Properties {
         internal static string TITLE {
             get {
                 return ResourceManager.GetString("TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   시작프로그램 해제과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string UNREGISTER {
+            get {
+                return ResourceManager.GetString("UNREGISTER", resourceCulture);
             }
         }
         

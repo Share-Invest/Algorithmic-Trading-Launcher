@@ -4,6 +4,7 @@ using ShareInvest.Services;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -42,6 +43,23 @@ namespace ShareInvest
                 {
                     case nameof(Properties.Resources.REGISTER):
 
+                        e.ClickedItem.Text = Properties.Resources.UNREGISTER
+                                                                 .Equals(e.ClickedItem.Text) ? Properties.Resources.REGISTER :
+                                                                                               Properties.Resources.UNREGISTER;
+                        register.IsWritable = register.IsWritable is false;
+
+                        var res = register.AddStartupProgram(Properties.Resources.TITLE,
+                                                             string.Concat(Assembly.GetEntryAssembly()?
+                                                                                   .ManifestModule
+                                                                                   .Name
+                                                                                   .Split('.')[0],
+                                                                           Properties.Resources.EXE));
+
+                        if (string.IsNullOrEmpty(res) is false &&
+                            notifyIcon != null)
+                        {
+                            notifyIcon.Text = res;
+                        }
                         return;
 
                     case nameof(Properties.Resources.INSTALL):
@@ -93,9 +111,11 @@ namespace ShareInvest
                     case 0 when now.Second == 0:
 
                         var name = Properties.Resources.APP.Split('.')[0];
-
+#if DEBUG
+                        Debug.WriteLine(name);
+#else
                         Startup.StartProcess(name);
-
+#endif
                         break;
 
                     case 1 when now.Second == 0x1E:
@@ -122,12 +142,14 @@ namespace ShareInvest
                                                   sizeof(uint));
 
             _ = WindowAttribute.SetWindowRgn(menu.Handle, hRgn, true);
-#if DEBUG
-            foreach (var info in Install.GetVersionInfo(Properties.Resources.SERVER))
-            {
 
+            for (int i = 0; i < programs.Length; i++)
+            {
+                foreach (var info in Install.GetVersionInfo(programs[i]))
+                {
+
+                }
             }
-#endif
             timer.Start();
         }
         void OnClosing(object sender, CancelEventArgs e)
@@ -151,6 +173,11 @@ namespace ShareInvest
                 Hide();
             }
         }
+        readonly string[] programs = new[]
+        {
+            Properties.Resources.SERVER
+        };
+        readonly Register register = new(Properties.Resources.RUN);
         readonly OpenAPI kiwoom = new();
         readonly DispatcherTimer timer;
         readonly System.Windows.Forms.ContextMenuStrip menu;

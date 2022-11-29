@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -27,8 +29,22 @@ static class Install
                     dirName.EndsWith(Properties.Resources.PUBLISH,
                                      StringComparison.OrdinalIgnoreCase))
                 {
-                    Debug.WriteLine(info.FileName);
+#if DEBUG
+                    Debug.WriteLine(JsonConvert.SerializeObject(info,
+                                                                Formatting.Indented));
 
+                    Build(dirName,
+                          string.Concat(Properties.Resources.BUILD,
+                                        fileName.Split('.')[0]
+                                                .ToUpperInvariant() switch
+                                        {
+                                            nameof(Properties.Resources.SERVER) =>
+
+                                                Properties.Resources._64SELFCONTAINED,
+
+                                            _ => throw new ArgumentNullException(fileName)
+                                        }));
+#endif
                     break;
                 }
             }
@@ -37,7 +53,7 @@ static class Install
                                                       "*",
                                                       SearchOption.AllDirectories))
         {
-            Debug.WriteLine(file);
+
 
             yield return FileVersionInfo.GetVersionInfo(file);
         }
@@ -49,6 +65,53 @@ static class Install
             var location = Assembly.GetExecutingAssembly().Location;
 
             return FileVersionInfo.GetVersionInfo(location).CompanyName;
+        }
+    }
+    static void Build(string workingDirectory, string commandLine)
+    {
+        DirectoryInfo? directoryInfo;
+
+        while (workingDirectory.Length > 0)
+        {
+            directoryInfo = Directory.GetParent(workingDirectory);
+
+            if (directoryInfo != null)
+            {
+                workingDirectory = directoryInfo.FullName;
+
+                if (directoryInfo?.GetFiles(Properties.Resources.CSPROJ,
+                                            SearchOption.TopDirectoryOnly)
+                                  .Length > 0)
+                    break;
+            }
+        }
+        using (var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                Verb = Properties.Resources.ADMIN,
+                FileName = Properties.Resources.POWERSHELL,
+                WorkingDirectory = workingDirectory,
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true
+            }
+        })
+        {
+#if DEBUG
+            process.OutputDataReceived += (sender, e) =>
+            {
+                Debug.WriteLine(e.Data);
+            };
+#endif
+            if (process.Start())
+            {
+                process.BeginOutputReadLine();
+                process.StandardInput.Write(commandLine + Environment.NewLine);
+                process.StandardInput.Close();
+                process.WaitForExit();
+            }
         }
     }
 }
