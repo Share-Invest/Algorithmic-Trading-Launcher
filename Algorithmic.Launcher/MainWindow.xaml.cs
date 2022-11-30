@@ -175,6 +175,7 @@ namespace ShareInvest
         }
         readonly string[] programs = new[]
         {
+            Properties.Resources.APP,
             Properties.Resources.SERVER
         };
         readonly Register register = new(Properties.Resources.RUN);

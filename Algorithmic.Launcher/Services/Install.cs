@@ -38,6 +38,10 @@ static class Install
                                         fileName.Split('.')[0]
                                                 .ToUpperInvariant() switch
                                         {
+                                            nameof(Properties.Resources.SECURITIES) =>
+
+                                                Properties.Resources.SECURITIES,
+
                                             nameof(Properties.Resources.SERVER) =>
 
                                                 Properties.Resources._64SELFCONTAINED,
