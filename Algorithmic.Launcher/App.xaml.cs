@@ -20,6 +20,7 @@ namespace ShareInvest
             {
                 Debug.WriteLine(arg);
             }
+            Status.SetDebug();
 #else
             using (var process = new Process
             {

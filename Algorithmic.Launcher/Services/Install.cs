@@ -57,8 +57,9 @@ static class Install
                                                       "*",
                                                       SearchOption.AllDirectories))
         {
-
-
+#if DEBUG
+            Debug.WriteLine(file);
+#endif
             yield return FileVersionInfo.GetVersionInfo(file);
         }
     }
