@@ -166,6 +166,9 @@
   <data name="RUN" xml:space="preserve">
     <value>SOFTWARE\Microsoft\Windows\CurrentVersion\Run</value>
   </data>
+  <data name="SECURITIES" xml:space="preserve">
+    <value>86 --no-self-contained</value>
+  </data>
   <data name="SERVER" xml:space="preserve">
     <value>Server.exe</value>
   </data>

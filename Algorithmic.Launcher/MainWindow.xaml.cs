@@ -1,9 +1,13 @@
-﻿using ShareInvest.Infrastructure.Kiwoom;
+﻿using Newtonsoft.Json;
+
+using ShareInvest.Infrastructure.Http;
+using ShareInvest.Infrastructure.Kiwoom;
 using ShareInvest.Services;
 
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Interop;
@@ -142,14 +146,47 @@ namespace ShareInvest
                                                   sizeof(uint));
 
             _ = WindowAttribute.SetWindowRgn(menu.Handle, hRgn, true);
-
+#if DEBUG
             for (int i = 0; i < programs.Length; i++)
             {
                 foreach (var info in Install.GetVersionInfo(programs[i]))
                 {
+                    var index = info.FileName.IndexOf(Properties.Resources.PUBLISH);
 
+                    if (index < 0)
+                        continue;
+
+                    new Action(async () =>
+                    {
+                        await client.PostAsync(info.GetType().Name,
+                                               JsonConvert.SerializeObject(new Models.FileVersionInfo
+                                               {
+                                                   App = programs[i].Split('.')[0],
+                                                   Path = Path.GetDirectoryName(info.FileName)?[index..],
+                                                   FileName = Path.GetFileName(info.FileName),
+                                                   CompanyName = info.CompanyName,
+                                                   FileBuildPart = info.FileBuildPart,
+                                                   FileDescription = info.FileDescription,
+                                                   FileMajorPart = info.FileMajorPart,
+                                                   FileMinorPart = info.FileMinorPart,
+                                                   FilePrivatePart = info.FilePrivatePart,
+                                                   FileVersion = info.FileVersion,
+                                                   InternalName = info.InternalName,
+                                                   OriginalFileName = info.OriginalFilename,
+                                                   PrivateBuild = info.PrivateBuild,
+                                                   ProductBuildPart = info.ProductBuildPart,
+                                                   ProductMajorPart = info.ProductMajorPart,
+                                                   ProductMinorPart = info.ProductMinorPart,
+                                                   ProductName = info.ProductName,
+                                                   ProductPrivatePart = info.ProductPrivatePart,
+                                                   ProductVersion = info.ProductVersion,
+                                                   Ticks = DateTime.Now.Ticks,
+                                                   File = await File.ReadAllBytesAsync(info.FileName)
+                                               }));
+                    })();
                 }
             }
+#endif
             timer.Start();
         }
         void OnClosing(object sender, CancelEventArgs e)
@@ -175,8 +212,10 @@ namespace ShareInvest
         }
         readonly string[] programs = new[]
         {
+            Properties.Resources.APP,
             Properties.Resources.SERVER
         };
+        readonly CoreRestClient client = new(Status.Address);
         readonly Register register = new(Properties.Resources.RUN);
         readonly OpenAPI kiwoom = new();
         readonly DispatcherTimer timer;
