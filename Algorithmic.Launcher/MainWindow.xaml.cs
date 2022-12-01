@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -25,6 +26,18 @@ namespace ShareInvest
             };
             menu.Items.AddRange(new[]
             {
+#if DEBUG
+                new System.Windows.Forms.ToolStripMenuItem
+                {
+                    Name = nameof(Properties.Resources.APP),
+                    Text = Properties.Resources.APP[..^4]
+                },
+                new System.Windows.Forms.ToolStripMenuItem
+                {
+                    Name = nameof(Properties.Resources.SERVER),
+                    Text = Properties.Resources.SERVER[..^4]
+                },
+#endif
                 new System.Windows.Forms.ToolStripMenuItem
                 {
                     Name = nameof(Properties.Resources.REGISTER),
@@ -41,7 +54,7 @@ namespace ShareInvest
                     Text = Properties.Resources.EXIT
                 }
             });
-            menu.ItemClicked += (sender, e) =>
+            menu.ItemClicked += async (sender, e) =>
             {
                 switch (e.ClickedItem.Name)
                 {
@@ -64,6 +77,18 @@ namespace ShareInvest
                         {
                             notifyIcon.Text = res;
                         }
+                        return;
+
+                    case nameof(Properties.Resources.SERVER):
+
+                        await ExecuteAsync(Properties.Resources.SERVER);
+
+                        return;
+
+                    case nameof(Properties.Resources.APP):
+
+                        await ExecuteAsync(Properties.Resources.APP);
+
                         return;
 
                     case nameof(Properties.Resources.INSTALL):
@@ -146,48 +171,44 @@ namespace ShareInvest
                                                   sizeof(uint));
 
             _ = WindowAttribute.SetWindowRgn(menu.Handle, hRgn, true);
-#if DEBUG
-            for (int i = 0; i < programs.Length; i++)
-            {
-                foreach (var info in Install.GetVersionInfo(programs[i]))
-                {
-                    var index = info.FileName.IndexOf(Properties.Resources.PUBLISH);
 
-                    if (index < 0)
-                        continue;
-
-                    new Action(async () =>
-                    {
-                        await client.PostAsync(info.GetType().Name,
-                                               JsonConvert.SerializeObject(new Models.FileVersionInfo
-                                               {
-                                                   App = programs[i].Split('.')[0],
-                                                   Path = Path.GetDirectoryName(info.FileName)?[index..],
-                                                   FileName = Path.GetFileName(info.FileName),
-                                                   CompanyName = info.CompanyName,
-                                                   FileBuildPart = info.FileBuildPart,
-                                                   FileDescription = info.FileDescription,
-                                                   FileMajorPart = info.FileMajorPart,
-                                                   FileMinorPart = info.FileMinorPart,
-                                                   FilePrivatePart = info.FilePrivatePart,
-                                                   FileVersion = info.FileVersion,
-                                                   InternalName = info.InternalName,
-                                                   OriginalFileName = info.OriginalFilename,
-                                                   PrivateBuild = info.PrivateBuild,
-                                                   ProductBuildPart = info.ProductBuildPart,
-                                                   ProductMajorPart = info.ProductMajorPart,
-                                                   ProductMinorPart = info.ProductMinorPart,
-                                                   ProductName = info.ProductName,
-                                                   ProductPrivatePart = info.ProductPrivatePart,
-                                                   ProductVersion = info.ProductVersion,
-                                                   Ticks = DateTime.Now.Ticks,
-                                                   File = await File.ReadAllBytesAsync(info.FileName)
-                                               }));
-                    })();
-                }
-            }
-#endif
             timer.Start();
+        }
+        async Task ExecuteAsync(string program)
+        {
+            foreach (var info in Install.GetVersionInfo(program))
+            {
+                var index = info.FileName.IndexOf(Properties.Resources.PUBLISH);
+
+                if (index < 0)
+                    continue;
+
+                await client.PostAsync(info.GetType().Name,
+                                       JsonConvert.SerializeObject(new Models.FileVersionInfo
+                                       {
+                                           App = program[..^4],
+                                           Path = Path.GetDirectoryName(info.FileName)?[index..],
+                                           FileName = Path.GetFileName(info.FileName),
+                                           CompanyName = info.CompanyName,
+                                           FileBuildPart = info.FileBuildPart,
+                                           FileDescription = info.FileDescription,
+                                           FileMajorPart = info.FileMajorPart,
+                                           FileMinorPart = info.FileMinorPart,
+                                           FilePrivatePart = info.FilePrivatePart,
+                                           FileVersion = info.FileVersion,
+                                           InternalName = info.InternalName,
+                                           OriginalFileName = info.OriginalFilename,
+                                           PrivateBuild = info.PrivateBuild,
+                                           ProductBuildPart = info.ProductBuildPart,
+                                           ProductMajorPart = info.ProductMajorPart,
+                                           ProductMinorPart = info.ProductMinorPart,
+                                           ProductName = info.ProductName,
+                                           ProductPrivatePart = info.ProductPrivatePart,
+                                           ProductVersion = info.ProductVersion,
+                                           Publish = DateTime.Now.Ticks,
+                                           File = await File.ReadAllBytesAsync(info.FileName)
+                                       }));
+            }
         }
         void OnClosing(object sender, CancelEventArgs e)
         {
@@ -210,11 +231,6 @@ namespace ShareInvest
                 Hide();
             }
         }
-        readonly string[] programs = new[]
-        {
-            Properties.Resources.APP,
-            Properties.Resources.SERVER
-        };
         readonly CoreRestClient client = new(Status.Address);
         readonly Register register = new(Properties.Resources.RUN);
         readonly OpenAPI kiwoom = new();
