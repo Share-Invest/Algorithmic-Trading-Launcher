@@ -17,36 +17,53 @@ static class Startup
 
             if (processes.Length == 0)
             {
-                using (var process = new Process
+                StartProcess(Resources.APP,
+                             Resources.WD86);
+            }
+        }
+    }
+    internal static void StartProcess()
+    {
+        var programs = Process.GetProcessesByName(nameof(Resources.SERVER));
+
+        if (programs.Length > 0)
+
+            for (int i = 0; i < programs.Length; i++)
+            {
+                var companyName = programs[i].MainModule?
+                                             .FileVersionInfo
+                                             .CompanyName;
+
+                if (string.IsNullOrEmpty(companyName) is false &&
+                    companyName.Equals(Install.CompanyName))
                 {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        UseShellExecute = true,
-                        FileName = Resources.APP,
-                        WorkingDirectory = Resources.WD86,
-                        Verb = Resources.ADMIN
-                    }
-                })
-                    if (process.Start())
-                    {
-                        GC.Collect();
-                    }
-            }
 #if DEBUG
-            foreach (var process in processes)
-            {
-                Debug.WriteLine(process.ProcessName);
-            }
+                    Debug.WriteLine(companyName);
 #endif
-        }
-        else
+                    return;
+                }
+            }
+        Install.Copy("*");
+
+        StartProcess(Resources.SERVER,
+                     Resources.PATH);
+    }
+    static void StartProcess(string fileName,
+                             string workingDirectory)
+    {
+        using (var process = new Process
         {
-#if DEBUG
-            foreach (var process in processes)
+            StartInfo = new ProcessStartInfo
             {
-                Debug.WriteLine(process.ProcessName);
+                UseShellExecute = true,
+                FileName = fileName,
+                WorkingDirectory = workingDirectory,
+                Verb = Resources.ADMIN
             }
-#endif
-        }
+        })
+            if (process.Start())
+            {
+                GC.Collect();
+            }
     }
 }

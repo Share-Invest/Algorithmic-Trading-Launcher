@@ -141,7 +141,12 @@ namespace ShareInvest
 
                         var name = Properties.Resources.APP.Split('.')[0];
 #if DEBUG
-                        Debug.WriteLine(name);
+                        Debug.WriteLine(JsonConvert.SerializeObject(new
+                        {
+                            date_time = DateTime.Now.ToString("u"),
+                            name
+                        },
+                        Formatting.Indented));
 #else
                         Startup.StartProcess(name);
 #endif

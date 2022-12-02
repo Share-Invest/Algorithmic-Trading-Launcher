@@ -151,6 +151,15 @@ namespace ShareInvest.Properties {
         }
         
         /// <summary>
+        ///   C:\www\Server과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string PATH {
+            get {
+                return ResourceManager.GetString("PATH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   pwsh과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string POWERSHELL {
@@ -194,6 +203,15 @@ namespace ShareInvest.Properties {
         internal static string REGISTER {
             get {
                 return ResourceManager.GetString("REGISTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   wwwroot\Server과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ROOT {
+            get {
+                return ResourceManager.GetString("ROOT", resourceCulture);
             }
         }
         
