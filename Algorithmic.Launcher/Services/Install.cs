@@ -17,8 +17,10 @@ static class Install
                                                 pattern,
                                                 SearchOption.AllDirectories))
         {
-            var fi = new FileInfo(Path.Combine(Properties.Resources.PATH,
-                                               Path.GetFileName(file)));
+            var fi = new FileInfo(file.Replace(Properties.Resources.ROOT,
+                                               string.Empty)
+                                      .Replace(@"\\",
+                                               @"\"));
 
             if (fi.Exists)
             {
