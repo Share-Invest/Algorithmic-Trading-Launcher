@@ -25,13 +25,11 @@ namespace ShareInvest
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    WorkingDirectory = Environment.CurrentDirectory,
+                    WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
                     Verb = ShareInvest.Properties.Resources.ADMIN,
                     UseShellExecute = true,
-                    FileName = string.Concat(Assembly.GetEntryAssembly()?
-                                                     .ManifestModule
-                                                     .Name
-                                                     .Split('.')[0],
+                    FileName = string.Concat(Assembly.GetEntryAssembly()?.ManifestModule
+                                                                         .Name[..^4],
                                              ShareInvest.Properties.Resources.EXE)
                 }
             })
@@ -39,8 +37,13 @@ namespace ShareInvest
                 {
                     GC.Collect();
                 }
-            Process.GetCurrentProcess().Kill();
+                else
+                    MessageBox.Show(process.StartInfo.WorkingDirectory,
+                                    process.ProcessName,
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
 #endif
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
