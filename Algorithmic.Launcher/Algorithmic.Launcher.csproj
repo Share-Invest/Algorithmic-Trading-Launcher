@@ -13,7 +13,7 @@
 		<Product>Algorithmic-Trading</Product>
 		<Copyright>Copyright ⓒ 2022, ShareInvest Corp.</Copyright>
 		<UseWindowsForms>True</UseWindowsForms>
-		<Version>0.0.0.1</Version>
+		<Version>0.0.0.4</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
