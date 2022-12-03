@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using ShareInvest.Infrastructure.Local;
 using ShareInvest.Properties;
+using ShareInvest.Infrastructure.Local;
 
 using System;
 using System.Diagnostics;
@@ -44,22 +44,19 @@ static class Startup
                             item.FileVersion.Equals(vInfo.FileVersion))
                             continue;
                     }
-                    if (await client.GetAsync(nameof(FileVersionInfo),
-                                              JToken.FromObject(new
-                                              {
-                                                  app = item.App,
-                                                  path = Resources.PUBLISH.Equals(item.Path) ?
-                                                         null :
-                                                         item.Path?[8..],
-                                                  name = item.FileName
-                                              }))
-                        is Models.FileVersionInfo res &&
-                        res.File != null)
-                    {
-                        await new File(fullFileName).WriteAllBytesAsync(res.File);
-
+                    var model = Convert.ToString(await client.GetAsync(nameof(FileVersionInfo),
+                                                                       JToken.FromObject(new
+                                                                       {
+                                                                           app = item.App,
+                                                                           path = Resources.PUBLISH.Equals(item.Path) ?
+                                                                                  null :
+                                                                                  item.Path?[8..],
+                                                                           name = item.FileName
+                                                                       })));
+                    if (string.IsNullOrEmpty(model))
                         continue;
-                    }
+
+                    item.File = JsonConvert.DeserializeObject<Models.FileVersionInfo>(model)?.File;
 #if DEBUG
                     Debug.WriteLine(JsonConvert.SerializeObject(new
                     {
@@ -69,6 +66,11 @@ static class Startup
                         item.FileVersion
                     },
                     Formatting.Indented));
+#else
+                    if (item.File != null)
+                    {
+                        await new File(fullFileName).WriteAllBytesAsync(item.File);
+                    }
 #endif
                 }
             if (processes.Length == 0)
