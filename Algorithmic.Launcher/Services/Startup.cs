@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using ShareInvest.Properties;
 using ShareInvest.Infrastructure.Local;
+using ShareInvest.Properties;
 
 using System;
 using System.Diagnostics;
@@ -19,6 +19,9 @@ static class Startup
         if (processes.Length == 1)
         {
             processes = Process.GetProcessesByName(name);
+
+            if (processes.Length > 0)
+                return;
 
             var client = new Update(Status.Address);
 
@@ -57,27 +60,13 @@ static class Startup
                         continue;
 
                     item.File = JsonConvert.DeserializeObject<Models.FileVersionInfo>(model)?.File;
-#if DEBUG
-                    Debug.WriteLine(JsonConvert.SerializeObject(new
-                    {
-                        item.App,
-                        item.Path,
-                        item.FileName,
-                        item.FileVersion
-                    },
-                    Formatting.Indented));
-#else
+
                     if (item.File != null)
-                    {
+
                         await new File(fullFileName).WriteAllBytesAsync(item.File);
-                    }
-#endif
                 }
-            if (processes.Length == 0)
-            {
-                StartProcess(Resources.APP,
-                             Resources.WD86);
-            }
+            StartProcess(Resources.APP,
+                         Resources.WD86);
         }
     }
     internal static void StartProcess()
