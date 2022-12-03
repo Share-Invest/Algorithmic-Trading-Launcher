@@ -10,6 +10,33 @@ namespace ShareInvest.Services;
 
 static class Install
 {
+    internal static void Copy(string pattern)
+    {
+        foreach (var file in Directory.GetFiles(Path.Combine(Properties.Resources.PATH,
+                                                             Properties.Resources.ROOT),
+                                                pattern,
+                                                SearchOption.AllDirectories))
+        {
+            var fi = new FileInfo(file.Replace(Properties.Resources.ROOT,
+                                               string.Empty)
+                                      .Replace(@"\\",
+                                               @"\"));
+
+            if (fi.Exists)
+            {
+                var source = FileVersionInfo.GetVersionInfo(file);
+                var dest = FileVersionInfo.GetVersionInfo(fi.FullName);
+
+                if (string.IsNullOrEmpty(source.FileVersion) ||
+                    source.FileVersion.Equals(dest.FileVersion) is false)
+                {
+                    File.Copy(file, fi.FullName, true);
+                }
+                continue;
+            }
+            File.Copy(file, fi.FullName);
+        }
+    }
     internal static IEnumerable<FileVersionInfo> GetVersionInfo(string fileName)
     {
         string? dirName = string.Empty;
@@ -63,7 +90,7 @@ static class Install
             yield return FileVersionInfo.GetVersionInfo(file);
         }
     }
-    static string? CompanyName
+    internal static string? CompanyName
     {
         get
         {

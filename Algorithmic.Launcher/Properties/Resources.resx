@@ -147,6 +147,9 @@
   <data name="KIWOOM" xml:space="preserve">
     <value>https://www1.kiwoom.com/h/customer/download/VOpenApiInfoView?dummyVal=0</value>
   </data>
+  <data name="PATH" xml:space="preserve">
+    <value>C:\www\Server</value>
+  </data>
   <data name="POWERSHELL" xml:space="preserve">
     <value>pwsh</value>
   </data>
@@ -162,6 +165,9 @@
   </data>
   <data name="REGISTER" xml:space="preserve">
     <value>시작프로그램 등록</value>
+  </data>
+  <data name="ROOT" xml:space="preserve">
+    <value>wwwroot\Server</value>
   </data>
   <data name="RUN" xml:space="preserve">
     <value>SOFTWARE\Microsoft\Windows\CurrentVersion\Run</value>
