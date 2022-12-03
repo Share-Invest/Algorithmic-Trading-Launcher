@@ -16,9 +16,9 @@ using System.Windows.Threading;
 
 namespace ShareInvest
 {
-    public partial class MainWindow : Window
+    public partial class Launcher : Window
     {
-        public MainWindow()
+        public Launcher()
         {
             menu = new System.Windows.Forms.ContextMenuStrip
             {
@@ -131,7 +131,7 @@ namespace ShareInvest
             {
                 Interval = new TimeSpan(0, 0, 1)
             };
-            timer.Tick += (sender, e) =>
+            timer.Tick += async (sender, e) =>
             {
                 var now = DateTime.Now;
 
@@ -139,7 +139,7 @@ namespace ShareInvest
                 {
                     case 0 when now.Second == 0:
 
-                        var name = Properties.Resources.APP.Split('.')[0];
+                        var name = Properties.Resources.APP[..^4];
 #if DEBUG
                         Debug.WriteLine(JsonConvert.SerializeObject(new
                         {
@@ -147,8 +147,8 @@ namespace ShareInvest
                             name
                         },
                         Formatting.Indented));
-#else
-                        Startup.StartProcess(name);
+//#else
+                        await Startup.StartProcess(name);
 #endif
                         break;
 

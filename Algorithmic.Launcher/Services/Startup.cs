@@ -1,13 +1,18 @@
-﻿using ShareInvest.Properties;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using ShareInvest.Infrastructure.Local;
+using ShareInvest.Properties;
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ShareInvest.Services;
 
 static class Startup
 {
-    internal static void StartProcess(string name)
+    internal static async Task StartProcess(string name)
     {
         var processes = Process.GetProcessesByName(nameof(Resources.API));
 
@@ -15,6 +20,57 @@ static class Startup
         {
             processes = Process.GetProcessesByName(name);
 
+            var client = new Update(Status.Address);
+
+            await foreach (var item in client.GetAsyncEnumerable(name))
+
+                if (string.IsNullOrEmpty(item.FileName) is false)
+                {
+                    var fullFileName = Resources.PUBLISH.Equals(item.Path) ||
+                                       string.IsNullOrEmpty(item.Path) ?
+
+                                       System.IO.Path.Combine(Resources.WD86,
+                                                              item.FileName) :
+
+                                       System.IO.Path.Combine(Resources.WD86,
+                                                              item.Path[8..],
+                                                              item.FileName);
+
+                    if (new System.IO.FileInfo(fullFileName).Exists)
+                    {
+                        var vInfo = FileVersionInfo.GetVersionInfo(fullFileName);
+
+                        if (item.FileVersion?.Length > 0 &&
+                            item.FileVersion.Equals(vInfo.FileVersion))
+                            continue;
+                    }
+                    if (await client.GetAsync(nameof(FileVersionInfo),
+                                              JToken.FromObject(new
+                                              {
+                                                  app = item.App,
+                                                  path = Resources.PUBLISH.Equals(item.Path) ?
+                                                         null :
+                                                         item.Path?[8..],
+                                                  name = item.FileName
+                                              }))
+                        is Models.FileVersionInfo res &&
+                        res.File != null)
+                    {
+                        await new File(fullFileName).WriteAllBytesAsync(res.File);
+
+                        continue;
+                    }
+#if DEBUG
+                    Debug.WriteLine(JsonConvert.SerializeObject(new
+                    {
+                        item.App,
+                        item.Path,
+                        item.FileName,
+                        item.FileVersion
+                    },
+                    Formatting.Indented));
+#endif
+                }
             if (processes.Length == 0)
             {
                 StartProcess(Resources.APP,
