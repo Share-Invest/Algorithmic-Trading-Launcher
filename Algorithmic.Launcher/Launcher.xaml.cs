@@ -140,16 +140,9 @@ namespace ShareInvest
                     case 0 when now.Second == 0:
 
                         var name = Properties.Resources.APP[..^4];
-#if DEBUG
-                        Debug.WriteLine(JsonConvert.SerializeObject(new
-                        {
-                            date_time = DateTime.Now.ToString("u"),
-                            name
-                        },
-                        Formatting.Indented));
-//#else
+
                         await Startup.StartProcess(name);
-#endif
+
                         break;
 
                     case 1 when now.Second == 0x1E:
