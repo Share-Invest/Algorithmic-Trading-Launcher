@@ -20,6 +20,16 @@ namespace ShareInvest
     {
         public Launcher()
         {
+            var fileName = string.Concat(Assembly.GetEntryAssembly()?
+                                                 .ManifestModule
+                                                 .Name[..^4],
+                                         Properties.Resources.EXE);
+
+            var isRegistered = register.GetValue(Properties.Resources.TITLE,
+                                                 fileName);
+
+            register.IsWritable = isRegistered;
+
             menu = new System.Windows.Forms.ContextMenuStrip
             {
                 Cursor = System.Windows.Forms.Cursors.Hand
@@ -40,8 +50,10 @@ namespace ShareInvest
 #endif
                 new System.Windows.Forms.ToolStripMenuItem
                 {
-                    Name = nameof(Properties.Resources.REGISTER),
-                    Text = Properties.Resources.REGISTER
+                    Text = isRegistered ? Properties.Resources.UNREGISTER :
+                                          Properties.Resources.REGISTER,
+
+                    Name = nameof(Properties.Resources.REGISTER)
                 },
                 new System.Windows.Forms.ToolStripMenuItem
                 {
@@ -66,11 +78,7 @@ namespace ShareInvest
                         register.IsWritable = register.IsWritable is false;
 
                         var res = register.AddStartupProgram(Properties.Resources.TITLE,
-                                                             string.Concat(Assembly.GetEntryAssembly()?
-                                                                                   .ManifestModule
-                                                                                   .Name
-                                                                                   .Split('.')[0],
-                                                                           Properties.Resources.EXE));
+                                                             fileName);
 
                         if (string.IsNullOrEmpty(res) is false &&
                             notifyIcon != null)

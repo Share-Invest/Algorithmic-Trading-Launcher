@@ -14,6 +14,21 @@ class Register
     {
         this.reg = reg;
     }
+    internal bool GetValue(string program, string fileName)
+    {
+        bool result = false;
+
+        using (var regKey = Registry.CurrentUser.OpenSubKey(reg, true))
+
+            if (regKey != null &&
+                string.IsNullOrEmpty(fileName) is false)
+            {
+                result = regKey.GetValue(program) != null;
+
+                regKey.Close();
+            }
+        return result;
+    }
     internal string? AddStartupProgram(string program, string fileName)
     {
 #if DEBUG

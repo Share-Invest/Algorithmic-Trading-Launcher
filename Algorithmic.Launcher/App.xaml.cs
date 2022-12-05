@@ -42,8 +42,9 @@ namespace ShareInvest
                                     process.ProcessName,
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Error);
-#endif
+
             Process.GetCurrentProcess().Kill();
+#endif
         }
     }
 }
