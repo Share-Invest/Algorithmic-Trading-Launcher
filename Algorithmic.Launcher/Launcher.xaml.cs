@@ -20,13 +20,7 @@ namespace ShareInvest
     {
         public Launcher()
         {
-            var fileName = string.Concat(Assembly.GetEntryAssembly()?
-                                                 .ManifestModule
-                                                 .Name[..^4],
-                                         Properties.Resources.EXE);
-
-            var isRegistered = register.GetValue(Properties.Resources.TITLE,
-                                                 fileName);
+            var isRegistered = register.GetValue(Properties.Resources.TITLE);
 
             register.IsWritable = isRegistered;
 
@@ -78,7 +72,10 @@ namespace ShareInvest
                         register.IsWritable = register.IsWritable is false;
 
                         var res = register.AddStartupProgram(Properties.Resources.TITLE,
-                                                             fileName);
+                                                             string.Concat(Assembly.GetEntryAssembly()?
+                                                                                   .ManifestModule
+                                                                                   .Name[..^4],
+                                                                           Properties.Resources.EXE));
 
                         if (string.IsNullOrEmpty(res) is false &&
                             notifyIcon != null)

@@ -14,14 +14,13 @@ class Register
     {
         this.reg = reg;
     }
-    internal bool GetValue(string program, string fileName)
+    internal bool GetValue(string program)
     {
         bool result = false;
 
         using (var regKey = Registry.CurrentUser.OpenSubKey(reg, true))
 
-            if (regKey != null &&
-                string.IsNullOrEmpty(fileName) is false)
+            if (regKey != null)
             {
                 result = regKey.GetValue(program) != null;
 
